@@ -10,6 +10,17 @@ node {
 
   stage ("scm") {
     checkout scm
+    sh '''
+      #!/bin/bash
+      set +x
+      source ~/.nvm/nvm.sh
+      set -x
+      npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
+      enable-npm-proxy
+      npm install @fusebot/jenkins-js-scripts
+      mv ./node_modules/@fusebot/jenkins-js-scripts ./jenkins_scripts
+      rm -rf ./node_modules
+    '''
     sh './jenkins_scripts/jenkins_setup_git.bash'
   }
 

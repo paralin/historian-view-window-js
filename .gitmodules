@@ -1,3 +1,0 @@
-[submodule "jenkins_scripts"]
-	path = jenkins_scripts
-	url = git@github.com:FuseRobotics/jenkins-js-scripts.git
