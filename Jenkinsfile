@@ -10,6 +10,13 @@ node {
 
   stage ("scm") {
     checkout scm
+    sh '''
+      #!/bin/bash
+      source ~/.nvm/nvm.sh
+      enable-npm-proxy
+      npm install @fusebot/jenkins-js-scripts
+      ln -s ./node_modules/@fusebot/jenkins-js-scripts ./jenkins_scripts
+    '''
     sh './jenkins_scripts/jenkins_setup_git.bash'
   }
 
@@ -36,6 +43,7 @@ node {
     stage ("cache-upload") {
       sh '''
         #!/bin/bash
+        ls
         source ./jenkins_scripts/jenkins_env.bash
         ./jenkins_scripts/finalize_cache.bash
       '''
