@@ -1,0 +1,10 @@
+node_modules/
+src/
+scripts/
+coverage/
+jasmine.json
+tslint.json
+tsconfig.json
+Jenkinsfile
+!lib/
+jenkins_scripts/
