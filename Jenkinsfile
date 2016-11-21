@@ -8,13 +8,13 @@ node {
     sh 'init-jenkins-node-scripts'
   }
 
-  env.CACHE_CONTEXT='remote-state-stream'
+  env.CACHE_CONTEXT='remote-state-stream-yarn'
   wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
     stage ("cache-download") {
       sh '''
         #!/bin/bash
         source ./jenkins_scripts/jenkins_env.bash
-        ./jenkins_scripts/init_cache.bash
+        ./jenkins_scripts/init_cache.bash ./.yarn-cache/
       '''
     }
 
@@ -23,8 +23,8 @@ node {
         #!/bin/bash
         source ./jenkins_scripts/jenkins_env.bash
         enable-npm-proxy
-        npm install
-        npm prune
+        npm install -g yarn
+        yarn install --cache-folder ./.yarn-cache/
       '''
     }
 
@@ -32,7 +32,7 @@ node {
       sh '''
         #!/bin/bash
         source ./jenkins_scripts/jenkins_env.bash
-        ./jenkins_scripts/finalize_cache.bash
+        ./jenkins_scripts/finalize_cache.bash ./.yarn-cache/
       '''
     }
 
