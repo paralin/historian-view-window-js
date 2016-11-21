@@ -56,6 +56,13 @@ export class HistorianViewMultiplexer {
     return this.windowMultiplexerFactory.getFactoryFcn();
   }
 
+  public dispose() {
+    for (let ref of this.serviceReferences) {
+      this.windowMultiplexerFactory.deleteFactory(ref.factory);
+    }
+    this.serviceReferences.length = 0;
+  }
+
   private indexOfHandle(handle: IServiceHandle) {
     let i = 0;
     for (let ref of this.serviceReferences) {
