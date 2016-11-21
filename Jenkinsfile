@@ -8,7 +8,7 @@ node {
     sh 'init-jenkins-node-scripts'
   }
 
-  env.CACHE_CONTEXT='remote-state-stream-yarn'
+  env.CACHE_CONTEXT='historian-view-window-yarn'
   wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
     stage ("cache-download") {
       sh '''
