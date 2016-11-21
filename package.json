@@ -24,7 +24,7 @@
     "@fusebot/remote-state-stream": "^0.4.0",
     "@fusebot/state-stream": "^0.2.0",
     "grpc-bus": "^0.2.3",
-    "rxjs": "5.0.0-rc.3"
+    "rxjs": "5.0.0-rc.4"
   },
   "devDependencies": {
     "@fusebot/jenkins-publish-condition": "^0.1.0",
