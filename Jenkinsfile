@@ -47,6 +47,7 @@ node {
     stage ("cache-upload") {
       sh '''
         #!/bin/bash
+        tree ./jenkins_scripts
         source ./jenkins_scripts/jenkins_env.bash
         ./jenkins_scripts/finalize_cache.bash
       '''
