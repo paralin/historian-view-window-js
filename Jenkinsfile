@@ -1,27 +1,11 @@
 node {
   stage ("node v6") {
-    sh '''
-      #!/bin/bash
-      set +x
-      source ~/.nvm/nvm.sh
-      nvm install 6
-    '''
+    sh 'init-node-ci 6'
   }
 
   stage ("scm") {
     checkout scm
-    sh '''
-      #!/bin/bash
-      set +x
-      source ~/.nvm/nvm.sh
-      set -x
-      npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} -q
-      enable-npm-proxy
-      npm install @fusebot/jenkins-js-scripts
-      mv ./node_modules/@fusebot/jenkins-js-scripts ./jenkins_scripts
-      rm -rf ./node_modules
-    '''
-    sh './jenkins_scripts/jenkins_setup_git.bash'
+    sh 'init-jenkins-node-scripts'
   }
 
   env.CACHE_CONTEXT='remote-state-stream'
