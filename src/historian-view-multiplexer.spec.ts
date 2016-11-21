@@ -19,11 +19,11 @@ describe('HistorianViewMultiplexer', () => {
   let factory: WindowFactory;
 
   beforeEach(() => {
-    mockServiceA = new MockViewService(100);
-    mockServiceB = new MockViewService(300);
-    multi = new HistorianViewMultiplexer();
-    multi.addService(mockServiceA);
-    multi.addService(mockServiceB);
+    mockServiceA = new MockViewService();
+    mockServiceB = new MockViewService();
+    multi = new HistorianViewMultiplexer({});
+    multi.addService(<any>mockServiceA);
+    multi.addService(<any>mockServiceB);
     factory = multi.getFactoryFcn();
   });
 

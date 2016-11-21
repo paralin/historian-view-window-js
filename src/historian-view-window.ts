@@ -37,6 +37,7 @@ export class HistorianViewWindow implements IWindow {
 
   private callHandle: ICallHandle;
   private isDisposed: boolean = false;
+  private shouldActivate = false;
   private midTimestamp: Date;
   private endBoundEntry: StreamEntry;
   private startBoundEntry: StreamEntry;
@@ -58,6 +59,10 @@ export class HistorianViewWindow implements IWindow {
   public initWithMetadata(meta: IWindowMeta) {
     this.meta.next(meta);
     this.state.next(WindowState.Waiting);
+    if (this.shouldActivate) {
+      this.state.next(WindowState.Pulling);
+      this.startRequest();
+    }
   }
 
   public containsTimestamp(midTime: Date) {
@@ -74,6 +79,7 @@ export class HistorianViewWindow implements IWindow {
   }
 
   public activate() {
+    this.shouldActivate = true;
     if (this.state.value !== WindowState.Waiting) {
       return;
     }
@@ -194,6 +200,10 @@ export class HistorianViewWindow implements IWindow {
         if (!this.meta.value && this.state.value === WindowState.Pending) {
           this.meta.next(this.pendingMeta);
           this.state.next(WindowState.Waiting);
+          if (this.shouldActivate) {
+            this.state.next(WindowState.Pulling);
+            this.startRequest();
+          }
         } else if (this.state.value === WindowState.Live) {
           this.data.saveEntry(this.endBoundEntry);
           this.state.next(WindowState.Committed);
