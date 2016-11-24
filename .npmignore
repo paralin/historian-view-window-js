@@ -9,3 +9,7 @@ Jenkinsfile
 !lib/
 jenkins_scripts/
 yarn.lock
+.yarn-cache/
+test/
+cache_hashes.txt
+.gitmodules
