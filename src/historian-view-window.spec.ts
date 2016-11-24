@@ -26,16 +26,17 @@ describe('HistorianViewWindow', () => {
         expect(window.meta.value).not.toBe(null);
         done();
       }
+    }, (err) => {
+      //
     });
     window.initWithMidTimestamp(mockTime(-5));
   });
 
   it('should go out of range with an invalid timestamp', (done) => {
     window.state.subscribe((state) => {
-      if (state === WindowState.OutOfRange) {
-        expect(window.meta.value).toBe(null);
-        done();
-      }
+      expect(state).toBeLessThan(WindowState.Committed);
+    }, (err) => {
+      done();
     });
     window.initWithMidTimestamp(mockTime(-50));
   });
@@ -44,13 +45,14 @@ describe('HistorianViewWindow', () => {
     let lastState = WindowState.Pending;
     window.state.subscribe((state) => {
       expect(state).toBeGreaterThanOrEqual(lastState);
-      expect(state).not.toBe(WindowState.Failed);
       if (state === WindowState.Waiting) {
         window.activate();
       }
       if (state === WindowState.Committed) {
         done();
       }
+    }, (err) => {
+      //
     });
     window.initWithMidTimestamp(mockTime(-5));
   });

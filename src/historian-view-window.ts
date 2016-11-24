@@ -2,9 +2,6 @@ import {
   BehaviorSubject,
 } from 'rxjs/BehaviorSubject';
 import {
-  Subject,
-} from 'rxjs/Subject';
-import {
   BoundedStateHistoryMode,
   IBoundedStateHistoryRequest,
   IBoundedStateHistoryResponse,
@@ -25,6 +22,7 @@ import {
   IWindowMeta,
   WindowState,
   StreamingBackend,
+  WindowErrors,
 } from '@fusebot/remote-state-stream';
 
 // A window is a snapshot of a period of time.
@@ -32,8 +30,6 @@ export class HistorianViewWindow implements IWindow {
   public state = new BehaviorSubject<WindowState>(WindowState.Pending);
   public meta = new BehaviorSubject<IWindowMeta>(null);
   public data: IWindowData = new StreamingBackend();
-  public error: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public disposed: Subject<void> = new Subject<void>();
 
   private callHandle: ICallHandle;
   private isDisposed: boolean = false;
@@ -73,11 +69,6 @@ export class HistorianViewWindow implements IWindow {
             wind.meta.value.endBound.getTime() >= midTime.getTime());
   }
 
-  public get isInErrorState() {
-    return this.state.value === WindowState.OutOfRange ||
-      this.state.value === WindowState.Failed;
-  }
-
   public activate() {
     this.shouldActivate = true;
     if (this.state.value !== WindowState.Waiting) {
@@ -94,10 +85,8 @@ export class HistorianViewWindow implements IWindow {
     }
     this.isDisposed = true;
     this.killCall();
-    if (this.state.value !== WindowState.Committed &&
-        this.state.value !== WindowState.Failed) {
-      this.error.next(new Error('Window disposed before finished.'));
-      this.state.next(WindowState.Failed);
+    if (!this.state.hasError && this.state.value !== WindowState.Committed) {
+      this.state.error(WindowErrors.GenericFailure());
     }
   }
 
@@ -165,13 +154,14 @@ export class HistorianViewWindow implements IWindow {
   }
 
   private failWithError(error: any) {
-    this.error.next(error);
-    this.state.next(WindowState.Failed);
+    if (!this.state.hasError) {
+      this.state.error(error);
+    }
     this.dispose();
   }
 
   private handleData(data: IBoundedStateHistoryResponse) {
-    if (this.isInErrorState ||
+    if (this.state.hasError ||
         this.state.value === WindowState.Committed ||
         this.isDisposed ||
         !this.callHandle) {
@@ -183,8 +173,7 @@ export class HistorianViewWindow implements IWindow {
       case BoundedStateHistoryStatus.BOUNDED_HISTORY_START_BOUND:
         this.startBoundEntry = decodedState;
         if (!this.startBoundEntry) {
-          this.state.next(WindowState.OutOfRange);
-          this.dispose();
+          this.failWithError(WindowErrors.OutOfRange());
           return;
         }
         this.pendingMeta.startBound = decodedState.timestamp;
@@ -233,11 +222,9 @@ export class HistorianViewWindow implements IWindow {
 
   private handleEnded() {
     this.killCall();
-    if (this.isInErrorState) {
+    if (this.state.hasError) {
       return;
     }
-    if (this.state.value === WindowState.Pending || this.state.value === WindowState.Pulling) {
-      this.failWithError(new Error('Remote stream ended prematurely.'));
-    }
+    this.dispose();
   }
 }

@@ -34,6 +34,8 @@ describe('HistorianViewMultiplexer', () => {
         expect(window.meta.value).not.toBe(null);
         done();
       }
+    }, (err) => {
+      //
     });
     window.initWithMidTimestamp(mockTime(-5));
   });
@@ -43,13 +45,14 @@ describe('HistorianViewMultiplexer', () => {
     let lastState = WindowState.Pending;
     window.state.subscribe((state) => {
       expect(state).toBeGreaterThanOrEqual(lastState);
-      expect(state).not.toBe(WindowState.Failed);
       if (state === WindowState.Waiting) {
         window.activate();
       }
       if (state === WindowState.Committed) {
         done();
       }
+    }, (err: any) => {
+      expect(err).toBeFalsy();
     });
     window.initWithMidTimestamp(mockTime(-5));
   });

@@ -8,3 +8,4 @@ tsconfig.json
 Jenkinsfile
 !lib/
 jenkins_scripts/
+yarn.lock
