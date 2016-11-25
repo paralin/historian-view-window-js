@@ -20,10 +20,10 @@
     "postpublish": "greenkeeper-postpublish"
   },
   "dependencies": {
-    "@fusebot/fusecloud-common": "~0.16.0",
-    "@fusebot/remote-state-stream": "~0.7.1",
-    "@fusebot/state-stream": "~1.0.0",
     "grpc-bus": "^1.0.0",
+    "@fusebot/fusecloud-common": "0.*",
+    "@fusebot/remote-state-stream": "^1.0.0",
+    "@fusebot/state-stream": "^1.0.0",
     "rxjs": "5.0.0-rc.4"
   },
   "devDependencies": {
