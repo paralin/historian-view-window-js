@@ -23,7 +23,7 @@
     "@fusebot/fusecloud-common": "~0.16.0",
     "@fusebot/remote-state-stream": "~0.7.1",
     "@fusebot/state-stream": "~0.3.0",
-    "grpc-bus": "^0.2.3",
+    "grpc-bus": "^1.0.0",
     "rxjs": "5.0.0-rc.4"
   },
   "devDependencies": {
