@@ -104,7 +104,7 @@ export class HistorianViewWindow implements IWindow {
   private buildBoundedHistoryRequest(boundsOnly: boolean): IBoundedStateHistoryRequest {
     return {
       context: this.streamContext,
-      mid_timestamp: this.midTimestamp.getTime(),
+      mid_timestamp: (this.midTimestamp || new Date()).getTime(),
       mode: BoundedStateHistoryMode.SNAPSHOT_BOUND,
       bounds_only: boundsOnly,
     };
