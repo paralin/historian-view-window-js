@@ -104,9 +104,9 @@ export class HistorianViewWindow implements IWindow {
   private buildBoundedHistoryRequest(boundsOnly: boolean): IBoundedStateHistoryRequest {
     return {
       context: this.streamContext,
-      mid_timestamp: (this.midTimestamp || new Date()).getTime(),
+      midTimestamp: (this.midTimestamp || new Date()).getTime(),
       mode: BoundedStateHistoryMode.SNAPSHOT_BOUND,
-      bounds_only: boundsOnly,
+      boundsOnly: boundsOnly,
     };
   }
 
@@ -138,10 +138,10 @@ export class HistorianViewWindow implements IWindow {
   }
 
   private decodeState(state: IStateEntry): StreamEntry {
-    if (!state || !state.json_state || !state.json_state.length) {
+    if (!state || !state.jsonState || !state.jsonState.length) {
       return null;
     }
-    let data = JSON.parse(state.json_state);
+    let data = JSON.parse(state.jsonState);
     let timestamp: any = state.timestamp;
     if (timestamp && typeof timestamp.toNumber === 'function') {
       timestamp = timestamp.toNumber();
