@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "grpc-bus": "^1.0.0",
-    "@fusebot/fusecloud-common": "0.17.0",
+    "@fusebot/fusecloud-common": "^0.17.1",
     "@fusebot/remote-state-stream": "^1.0.0",
     "@fusebot/state-stream": "^1.0.0",
     "rxjs": "5.0.0-rc.4"
@@ -31,16 +31,16 @@
     "@types/chai": "^3.4.34",
     "@types/es6-promise": "0.0.32",
     "@types/jasmine": "^2.5.36",
+    "@types/long": "^3.0.31",
     "@types/node": "^6.0.46",
-    "@types/protobufjs": "^5.0.31",
     "babel-core": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
-    "semantic-release": "^6.3.3",
     "cz-conventional-changelog": "^1.2.0",
     "greenkeeper-postpublish": "^1.0.1",
     "istanbul": "^1.1.0-alpha.1",
     "jasmine": "^2.5.2",
     "jasmine-console-reporter": "^1.2.7",
+    "semantic-release": "^6.3.3",
     "ts-node": "^1.4.1",
     "tslint": "^4.0.2",
     "typescript": "2.1.1"

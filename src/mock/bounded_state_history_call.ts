@@ -34,11 +34,11 @@ export class BoundedStateHistoryCall implements ICallHandle {
 
   public process() {
     let req = this.req;
-    if (this.storage.entries[0].timestamp.getTime() > req.mid_timestamp) {
+    if (this.storage.entries[0].timestamp.getTime() > req.midTimestamp) {
       this.endWithOutOfRange();
       return;
     }
-    let closestIdx = this.storage.findClosest(new Date(req.mid_timestamp));
+    let closestIdx = this.storage.findClosest(new Date(req.midTimestamp));
     let beginEntry: IStateEntry;
     for (let i = closestIdx; i >= 0; i--) {
       if (i >= this.storage.entries.length) {
@@ -47,7 +47,7 @@ export class BoundedStateHistoryCall implements ICallHandle {
       let ent = this.storage.entries[i];
       if (ent.type === StreamEntryType.StreamEntrySnapshot) {
         beginEntry = {
-          json_state: JSON.stringify(ent.data),
+          jsonState: JSON.stringify(ent.data),
           timestamp: ent.timestamp.getTime(),
           type: ent.type,
         };
@@ -65,7 +65,7 @@ export class BoundedStateHistoryCall implements ICallHandle {
       for (let i = closestIdx + 1; i < this.storage.entries.length; i++) {
         let ent = this.storage.entries[i];
         let decent: IStateEntry = {
-          json_state: JSON.stringify(ent.data),
+          jsonState: JSON.stringify(ent.data),
           timestamp: ent.timestamp.getTime(),
           type: ent.type,
         };
@@ -82,7 +82,7 @@ export class BoundedStateHistoryCall implements ICallHandle {
       });
     }
 
-    if (this.req.bounds_only) {
+    if (this.req.boundsOnly) {
       this.sendEnd();
       return;
     }
