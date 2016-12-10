@@ -24,7 +24,7 @@
     "@fusebot/fusecloud-common": "^0.18.0",
     "@fusebot/remote-state-stream": "^1.0.0",
     "@fusebot/state-stream": "^1.0.0",
-    "rxjs": "5.0.0-rc.4"
+    "rxjs": "5.0.0-rc.5"
   },
   "devDependencies": {
     "@fusebot/jenkins-publish-condition": "^0.1.0",
@@ -43,7 +43,7 @@
     "semantic-release": "^6.3.3",
     "ts-node": "^1.4.1",
     "tslint": "^4.0.2",
-    "typescript": "2.1.1"
+    "typescript": "2.1.4"
   },
   "release": {
     "verifyConditions": "@fusebot/jenkins-publish-condition"
