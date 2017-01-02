@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "grpc-bus": "^1.0.0",
-    "@fusebot/fusecloud-common": "^0.18.0",
+    "@fusebot/fusecloud-common": "^0.19.3",
     "@fusebot/remote-state-stream": "^1.0.0",
     "@fusebot/state-stream": "^1.0.0",
     "rxjs": "^5.0.2"
