@@ -194,7 +194,9 @@ export class HistorianViewWindow implements IWindow {
             this.startRequest();
           }
         } else if (this.state.value === WindowState.Live) {
-          this.data.saveEntry(this.endBoundEntry);
+          if (this.endBoundEntry) {
+            this.data.saveEntry(this.endBoundEntry);
+          }
           this.state.next(WindowState.Committed);
           return;
         }
