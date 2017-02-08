@@ -1,6 +1,8 @@
 Historian View Window
 =====================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/FuseRobotics/historian-view-window-js.svg?token=6b300921a7cde62f426fe74611afe4af2ef19ec43bb8e113d6b97d5e97aa6dd0)](https://greenkeeper.io/)
+
 Consumes `grpc-bus` and `state-stream` and `remote-state-stream` and `reporter` to consume a remote state stream as a window implementation.
 
 Multiplexer Usage
